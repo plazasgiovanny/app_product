@@ -1,0 +1,145 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "App_product API",
+    "description": "Colección para probar la API REST de productos (versión 1).\n\nAntes de ejecutar: arranca la API (`dotnet run --project src/App_product.Api`) y ajusta la variable de colección **baseUrl** si usas otro puerto.\n\nSwagger UI (solo Development): `{{baseUrl}}/swagger`",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5181"
+    },
+    {
+      "key": "productoId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "Productos (v1)",
+      "item": [
+        {
+          "name": "Listar productos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/productos",
+            "description": "GET /api/v1/productos — Lista todos los productos (200 OK, puede ser [])."
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener producto por Id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/productos/{{productoId}}",
+            "description": "GET /api/v1/productos/{id} — 200 si existe; 404 si no."
+          },
+          "response": []
+        },
+        {
+          "name": "Crear producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cuaderno universitario\",\n  \"descripcion\": \"Cuaderno de 200 hojas tamaño carta\",\n  \"precio\": 8500.00\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/productos",
+            "description": "POST /api/v1/productos — 201 Created con header Location; 400 si falla validación."
+          },
+          "response": []
+        },
+        {
+          "name": "Crear producto (sin descripción)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Borrador\",\n  \"descripcion\": null,\n  \"precio\": 300.00\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/productos",
+            "description": "Ejemplo mínimo con descripción opcional en null."
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar producto",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cuaderno universitario actualizado\",\n  \"descripcion\": \"Nueva descripción\",\n  \"precio\": 9000.00\n}"
+            },
+            "url": "{{baseUrl}}/api/v1/productos/{{productoId}}",
+            "description": "PUT /api/v1/productos/{id} — 204 No Content; 400 validación; 404 si no existe."
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar producto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{baseUrl}}/api/v1/productos/{{productoId}}",
+            "description": "DELETE /api/v1/productos/{id} — 204 No Content; 404 si no existe."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Documentación",
+      "item": [
+        {
+          "name": "Swagger UI",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/swagger",
+            "description": "Abre en el navegador o en Postman (solo entorno Development)."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
