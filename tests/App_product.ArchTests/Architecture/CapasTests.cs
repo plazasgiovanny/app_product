@@ -1,3 +1,4 @@
+using System.Reflection;
 using NetArchTest.Rules;
 using Xunit;
 
@@ -196,5 +197,52 @@ public class CapasTests
         Assert.True(result.IsSuccessful,
             $"Entidades fuera de la capa Domain: " +
             $"{string.Join(", ", result.FailingTypeNames ?? [])}");
+    }
+
+    // -------------------------------------------------------------------------
+    // REGLA 11: Los artefactos GraphQL deben vivir en la capa Api
+    // -------------------------------------------------------------------------
+
+    /// <summary>
+    /// Query, Mutation y todo el namespace GraphQL son protocolo de transporte;
+    /// deben residir exclusivamente en App_product.Api.
+    /// </summary>
+    [Fact(DisplayName = "Regla 11 – Query, Mutation y namespace GraphQL están en Api")]
+    public void GraphQL_Artefactos_DebenEstar_EnApi()
+    {
+        var ensambladosProyecto = new[]
+        {
+            typeof(App_product.Domain.Entities.Producto).Assembly,
+            typeof(App_product.Application.Services.IProductoService).Assembly,
+            typeof(App_product.Infrastructure.Repositories.ProductoRepository).Assembly,
+            typeof(App_product.Api.Controllers.V1.ProductosController).Assembly,
+        };
+
+        var nombresFallidos = ensambladosProyecto
+            .SelectMany(ObtenerArtefactosGraphQl)
+            .Where(t => !t.Namespace?.StartsWith(NsApi, StringComparison.Ordinal) ?? true)
+            .Select(t => t.FullName)
+            .Distinct()
+            .ToList();
+
+        Assert.True(nombresFallidos.Count == 0,
+            $"Artefactos GraphQL fuera de la capa Api: {string.Join(", ", nombresFallidos)}");
+    }
+
+    private static IEnumerable<Type> ObtenerArtefactosGraphQl(Assembly assembly)
+    {
+        var enNamespaceGraphQl = Types.InAssembly(assembly)
+            .That()
+            .ResideInNamespaceContaining(".GraphQL")
+            .GetTypes();
+
+        var conNombreQueryOMutation = Types.InAssembly(assembly)
+            .That()
+            .HaveNameEndingWith("Query")
+            .Or()
+            .HaveNameEndingWith("Mutation")
+            .GetTypes();
+
+        return enNamespaceGraphQl.Concat(conNombreQueryOMutation).Distinct();
     }
 }
