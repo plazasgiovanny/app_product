@@ -49,6 +49,9 @@ app.UseAuthorization();
 // 5. Mapeo de controllers
 app.MapControllers();
 
+// 6. Endpoint GraphQL (coexiste con REST; Nitro IDE en /graphql)
+app.MapGraphQL();
+
 // ──────────────────────────────────────────
 // Migración automática al arrancar (solo Development)
 // ──────────────────────────────────────────

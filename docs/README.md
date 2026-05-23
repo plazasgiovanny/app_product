@@ -17,6 +17,18 @@ Documenta la arquitectura del proyecto usando el modelo C4 (4 niveles) y los pri
 | [05-solid.md](arquitectura/05-solid.md) | Principios SOLID con evidencia en el código |
 | [06-patrones-diseno.md](arquitectura/06-patrones-diseno.md) | Patrones de diseño aplicados |
 
+### GraphQL [`graphql/`](graphql/README.md)
+
+Segunda vía de ejecución de la API con Hot Chocolate, coexistente con REST.
+
+| Documento | Descripción |
+|---|---|
+| [README.md](graphql/README.md) | Índice, estructura de código y acceso a Nitro |
+| [01-que-es-graphql.md](graphql/01-que-es-graphql.md) | Qué es GraphQL, beneficios y comparación con REST |
+| [02-arquitectura-limpia.md](graphql/02-arquitectura-limpia.md) | Capas, DIP, SRP y Regla 11 de NetArchTest |
+| [03-implementacion-hot-chocolate.md](graphql/03-implementacion-hot-chocolate.md) | Paso a paso, resolvers y pipeline de Hot Chocolate |
+| [04-ejemplos-uso.md](graphql/04-ejemplos-uso.md) | Queries, mutaciones, errores y cURL |
+
 ### Endpoints [`endpoints/`](endpoints/README.md)
 
 Documentación detallada de los servicios REST.
@@ -43,6 +55,6 @@ Mecanismos automatizados que protegen las fronteras de la arquitectura limpia y 
 | Documento | Descripción |
 |---|---|
 | [README.md](arquitectura/guardrails/README.md) | Visión general de los guardrails y su relación con el flujo de trabajo |
-| [01-pruebas-arquitectura.md](arquitectura/guardrails/01-pruebas-arquitectura.md) | 10 reglas NetArchTest que verifican las fronteras entre capas |
+| [01-pruebas-arquitectura.md](arquitectura/guardrails/01-pruebas-arquitectura.md) | 11 reglas NetArchTest que verifican las fronteras entre capas (incluye GraphQL en Api) |
 | [02-pipeline-ci.md](arquitectura/guardrails/02-pipeline-ci.md) | Pipeline de GitHub Actions con 3 jobs: build, unit tests y arch tests |
 | [03-branch-protection.md](arquitectura/guardrails/03-branch-protection.md) | Branch Protection Rules, `.editorconfig` y Roslyn Analyzers |

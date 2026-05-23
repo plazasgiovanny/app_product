@@ -41,6 +41,10 @@ Todos los errores retornan `application/problem+json` con la estructura `Problem
 }
 ```
 
+## GraphQL (vía alternativa)
+
+La misma lógica de negocio está disponible por GraphQL en `/graphql` (IDE Nitro en Development). Ver la documentación completa en [`docs/graphql/`](../graphql/README.md).
+
 ## Documentos
 
 - [productos.md](productos.md) — Detalle de cada endpoint con ejemplos de request/response.

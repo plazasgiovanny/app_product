@@ -13,7 +13,7 @@ tests/
 └── App_product.ArchTests/
     ├── App_product.ArchTests.csproj
     └── Architecture/
-        └── CapasTests.cs          ← 10 reglas de arquitectura
+        └── CapasTests.cs          ← 11 reglas de arquitectura
 ```
 
 ## Paquete NuGet utilizado
@@ -22,7 +22,7 @@ tests/
 <PackageReference Include="NetArchTest.Rules" Version="1.3.2" />
 ```
 
-## Las 10 Reglas implementadas
+## Las 11 Reglas implementadas
 
 ### Reglas de aislamiento del Dominio (1–3)
 
@@ -72,6 +72,16 @@ Garantizan que los artefactos característicos de cada capa residan exactamente 
 | 9 | Las clases cuyo nombre termina en `Dto` deben estar en `Application` |
 | 10 | Las entidades dentro del namespace `Domain.Entities` deben residir en `Domain` |
 
+### Regla de ubicación de GraphQL (11)
+
+Garantiza que GraphQL permanezca en la capa de presentación.
+
+| Regla | Descripción |
+|-------|-------------|
+| 11 | Los tipos en `App_product.Api.GraphQL` y las clases cuyo nombre termina en `Query` o `Mutation` deben estar en `Api` |
+
+Documentación detallada: [`docs/graphql/02-arquitectura-limpia.md`](../../graphql/02-arquitectura-limpia.md).
+
 ## Cómo ejecutar las pruebas
 
 ```bash
@@ -81,8 +91,8 @@ dotnet test tests/App_product.ArchTests/App_product.ArchTests.csproj --verbosity
 Salida esperada:
 
 ```
-Pruebas totales: 10
-     Correcto: 10
+Pruebas totales: 11
+     Correcto: 11
 ```
 
 ## Cómo agregar nuevas reglas

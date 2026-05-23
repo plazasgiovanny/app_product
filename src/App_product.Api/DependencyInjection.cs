@@ -6,6 +6,7 @@ using App_product.Infrastructure.Persistence;
 using App_product.Infrastructure.Repositories;
 using Asp.Versioning;
 using FluentValidation;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 namespace App_product.Api;
@@ -79,13 +80,27 @@ public static class DependencyInjection
         {
             // Habilita los comentarios XML en Swagger
             var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            var xmlPath = System.IO.Path.Combine(AppContext.BaseDirectory, xmlFile);
             if (File.Exists(xmlPath))
                 options.IncludeXmlComments(xmlPath);
         });
 
         // Configura los documentos Swagger por versión (uno por ApiVersion encontrada)
         services.ConfigureOptions<SwaggerOptions>();
+
+        services.AddScoped<GraphQL.Query>();
+        services.AddScoped<GraphQL.Mutation>();
+
+        services.AddGraphQLServer()
+            .AddQueryType<GraphQL.Query>()
+            .AddMutationType<GraphQL.Mutation>()
+            .AddType<GraphQL.Types.ProductoType>()
+            .AddErrorFilter<GraphQL.Errors.GraphQLDomainErrorFilter>()
+            .ModifyRequestOptions((services, options) =>
+            {
+                var env = services.GetRequiredService<IWebHostEnvironment>();
+                options.IncludeExceptionDetails = env.IsDevelopment();
+            });
 
         return services;
     }
